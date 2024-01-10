@@ -20,19 +20,18 @@ class Author(models.Model):
         comments_rating = self.user.comments.aggregate(cr=Coalesce(Sum('rating'), 0))['cr']
         posts_comments_rating = self.posts.aggregate(pcr=Coalesce(Sum('comment__rating'), 0))['pcr']
 
-        # Проверка
-        print(posts_rating)
-        print('-----------------')
-        print(comments_rating)
-        print('-----------------')
-        print(posts_comments_rating)
-
         self.rating = posts_rating * 3 + comments_rating + posts_comments_rating
         self.save()
+
+    def __str__(self):
+        return self.user.username
 
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Post(models.Model):
@@ -42,9 +41,12 @@ class Post(models.Model):
                                  default=news)
     datetime_post = models.DateTimeField(auto_now_add=True)
     category = models.ManyToManyField(Category, through='PostCategory')
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=255)
     text = models.TextField()
     rating = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f'{self.title.title()}: {self.text[:20]}'
 
     def like(self):
         self.rating += 1
