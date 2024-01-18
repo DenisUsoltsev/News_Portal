@@ -17,7 +17,7 @@ class PostForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super().clean()
         title = cleaned_data.get('title')
-        content = cleaned_data.get('content')
+        content = cleaned_data.get('text')
         if content == title:
             raise ValidationError(
                 'Текст не должен совпадать с заголовком.'
