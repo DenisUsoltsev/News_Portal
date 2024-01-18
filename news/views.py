@@ -55,7 +55,7 @@ class PostCreateView(CreateView):
     form_class = PostForm
     model = Post
     template_name = 'post_create_or_edit.html'
-    success_url = '/news/'
+    # success_url = '/news/'
 
     def form_valid(self, form):
         post = form.save(commit=False)
