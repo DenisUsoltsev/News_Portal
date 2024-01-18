@@ -14,4 +14,22 @@
         <p>{{ text|censor }}</p>
     {% endfor %}
 
+    <div class="text-center" >
+        {% if news.post_type == "NE" %}
+            <a style="text-decoration: none" href="/news/{{ news.pk }}/edit">
+                <input class="btn btn-lg btn-dark" type="button" value="Редактировать" />
+            </a>
+            <a style="text-decoration: none" href="/news/{{ news.pk }}/delete">
+                <input id="deleteButton" class="btn btn-lg btn-dark" type="button" value="Удалить" />
+            </a>
+        {% else %}
+            <a style="text-decoration: none" href="/article/{{ news.pk }}/edit">
+                <input class="btn btn-lg btn-dark" type="button" value="Редактировать" />
+            </a>
+            <a style="text-decoration: none" href="/article/{{ news.pk }}/delete">
+                <input id="deleteButton" class="btn btn-lg btn-dark" type="button" value="Удалить" />
+            </a>
+        {% endif %}
+    </div>
+
 {% endblock content %}
