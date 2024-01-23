@@ -20,8 +20,10 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name='flatpages/home.html'), name='home'),
+    path('home/', TemplateView.as_view(template_name='flatpages/home.html'), name='home'),
     path('admin/', admin.site.urls),
     path('pages/', include('django.contrib.flatpages.urls')),
-    path('news/', include('news.urls'), name='news'),
     path('article/', include('news.urls'), name='article'),
+    path('news/', include('news.urls'), name='news'),
+    path('accounts/', include('allauth.urls')),
 ]
