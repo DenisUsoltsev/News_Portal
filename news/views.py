@@ -1,4 +1,3 @@
-import requests
 from django.views.generic import (
     ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView,
 )
@@ -8,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from .models import Post
+from .models import Post, Author
 from .filters import PostFilter
 from .forms import PostForm
 
@@ -127,4 +126,5 @@ def upgrade_me(request):
     author_group = Group.objects.get(name='authors')
     if not request.user.groups.filter(name='authors').exists():
         author_group.user_set.add(user)
+        Author.objects.create(user_id=request.user.pk)
     return redirect('/news/profile/')
