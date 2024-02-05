@@ -12,6 +12,7 @@ POST_TYPES = [
     (articles, 'Статья')
 ]
 
+
 class Author(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     rating = models.IntegerField(default=0)
@@ -63,6 +64,10 @@ class Post(models.Model):
 
     def preview(self):
         return f"{self.text[:124]}..."
+
+    def get_categories(self):
+        cat_qs = self.category.all()
+        return cat_qs
 
 
 class PostCategory(models.Model):
