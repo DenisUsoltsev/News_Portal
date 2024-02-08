@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models import Sum
 from django.db.models.functions import Coalesce
 from django.urls import reverse
+from django.core.cache import cache
 
 news = "NE"
 articles = "AR"
@@ -68,6 +69,12 @@ class Post(models.Model):
     def get_categories(self):
         cat_qs = self.category.all()
         return cat_qs
+
+    def save(self, *args, **kwargs):
+        # сначала вызываем метод родителя, чтобы объект сохранился
+        super().save(*args, **kwargs)
+        # затем удаляем его из кэша, чтобы сбросить его
+        cache.delete(f'news-{self.id}')
 
 
 class PostCategory(models.Model):
