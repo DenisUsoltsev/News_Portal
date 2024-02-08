@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
+from django.core.cache import cache
 from .models import Post, Author, Category
 from .filters import PostFilter
 from .forms import PostForm
@@ -36,6 +37,15 @@ class PostDetail(DetailView):
             return render(request, 'news/no_post.html', status=404)
         context = self.get_context_data(object=self.object)
         return self.render_to_response(context)
+
+    def get_object(self, *args, **kwargs):
+        obj = cache.get(f'news-{self.kwargs["id"]}', None)
+
+        if not obj:
+            obj = super().get_object(queryset=self.queryset)
+            cache.set(f'news-{self.kwargs["id"]}', obj)
+
+        return obj
 
 
 class PostsSearchList(ListView):
