@@ -194,3 +194,6 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+
+# Перевод уведомлений в консоль
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
