@@ -17,7 +17,7 @@ from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv())
 
-logger = logging.getLogger(name='django')
+logger = logging.getLogger('django')
 DATE_FORMAT = "%d.%m.%Y %H:%M:%S"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
