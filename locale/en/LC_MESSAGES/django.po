@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-19 09:21+0400\n"
+"POT-Creation-Date: 2024-03-19 22:33+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,8 @@ msgstr ""
 msgid "Название заголовка"
 msgstr "Title"
 
-#: .\news\filters.py:16 .\news\forms.py:17
+#: .\news\filters.py:16 .\news\forms.py:17 .\news\models.py:20
+#: .\news\models.py:44 .\news\models.py:88
 msgid "Автор"
 msgstr "Author"
 
@@ -29,7 +30,7 @@ msgstr "Author"
 msgid "Все авторы"
 msgstr "All authors"
 
-#: .\news\filters.py:22 .\news\forms.py:16
+#: .\news\filters.py:22 .\news\forms.py:16 .\news\models.py:83
 #: .\templates\news\category_list.html:28 .\templates\news\posts.html:51
 #: .\templates\news\search.html:26
 msgid "Категория"
@@ -43,19 +44,51 @@ msgstr "All Categories"
 msgid "Дата"
 msgstr "Date"
 
-#: .\news\forms.py:14 .\templates\news\category_list.html:25
-#: .\templates\news\post_delete.html:12 .\templates\news\posts.html:48
-#: .\templates\news\search.html:23
+#: .\news\forms.py:14 .\news\models.py:51
+#: .\templates\news\category_list.html:25 .\templates\news\post_delete.html:12
+#: .\templates\news\posts.html:48 .\templates\news\search.html:23
 msgid "Заголовок"
 msgstr "Title"
 
-#: .\news\forms.py:15 .\templates\news\post_delete.html:14
+#: .\news\forms.py:15 .\news\models.py:52 .\templates\news\post_delete.html:14
 msgid "Текст"
 msgstr "Text"
 
 #: .\news\forms.py:26
 msgid "Текст не должен совпадать с заголовком."
 msgstr "The text must not match the title."
+
+#: .\news\models.py:21
+msgid "Рейтинг"
+msgstr "Rating"
+
+#: .\news\models.py:36
+msgid "Название"
+msgstr "Title"
+
+#: .\news\models.py:37
+msgid "Подписчики"
+msgstr "Subscribers"
+
+#: .\news\models.py:48
+msgid "Тип публикации"
+msgstr "Type of publication"
+
+#: .\news\models.py:53
+msgid "Рейтинг публикации"
+msgstr "Publication rating"
+
+#: .\news\models.py:82 .\news\models.py:87 .\news\models.py:95
+msgid "Публикация"
+msgstr "Publication"
+
+#: .\news\models.py:89 .\news\models.py:102
+msgid "Комментарий"
+msgstr "Comment"
+
+#: .\news\models.py:91
+msgid "Рейтинг комментария"
+msgstr "Comment Rating"
 
 #: .\news\views.py:104 .\templates\flatpages\default.html:45
 msgid "Добавить статью"
