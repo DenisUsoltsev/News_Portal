@@ -1,28 +1,29 @@
 {% extends 'flatpages/default.html' %}
+{% load i18n %}
 
 {% load custom_filters %}
 
 {% block title %}
-    Поиск
+    {% trans 'Поиск' %}
 {% endblock title %}
 
 {% block content %}
-    <h1>Новостная лента</h1>
+    <h1>{% trans 'Новостная лента' %}</h1>
     {% if news %}
-        <p><i>Количество найденных новостей/статей: <u>{{ page_obj.paginator.count }}</u></i></p>
+        <p><i>{% trans 'Количество найденных новостей/статей:' %} <u>{{ page_obj.paginator.count }}</u></i></p>
 
         <form method="GET">
             {{ filter.form.as_table }}
-            <input class="btn btn-lg btn-dark" type="submit" value="Найти">
+            <input class="btn btn-lg btn-dark" type="submit" value="{% trans 'Найти' %}">
         </form>
 
         <hr>
         <table width="100%">
             <tr align="center">
-                <th>Заголовок</th>
-                <th>Краткое содержание</th>
-                <th>Дата публикации</th>
-                <th>Категория</th>
+                <th>{% trans 'Заголовок' %}</th>
+                <th>{% trans 'Краткое содержание' %}</th>
+                <th>{% trans 'Дата публикации' %}</th>
+                <th>{% trans 'Категория' %}</th>
             </tr>
 
             {% for post in news %}
@@ -46,7 +47,7 @@
         </table>
 
     {% else %}
-        <h2>Публикаций нет!</h2>
+        <h2>{% trans 'Публикаций нет!' %}</h2>
     {% endif %}
 
 {% include "flatpages/paginate.html" %}

@@ -1,3 +1,4 @@
+import pytz
 from django.views.generic import (
     ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView,
 )
@@ -8,6 +9,8 @@ from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.core.cache import cache
+from django.utils.translation import gettext as _
+from django.utils import timezone
 from .models import Post, Author, Category
 from .filters import PostFilter
 from .forms import PostForm
@@ -21,6 +24,16 @@ class PostsList(ListView):
     template_name = 'news/posts.html'
     context_object_name = 'news'
     paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['current_time'] = timezone.now()
+        context['timezones'] = pytz.common_timezones
+        return context
+
+    def post(self, request):
+        request.session['django_timezone'] = request.POST.get('timezone')
+        return redirect('/news/')
 
 
 class PostDetail(DetailView):
@@ -88,9 +101,9 @@ class PostCreateView(PermissionRequiredMixin, CreateView):
 
     def get_type(self):
         if self.request.path == '/article/create/':
-            return {'title': 'Добавить статью', 'content': 'Добавление новой статьи'}
+            return {'title': _('Добавить статью'), 'content': _('Добавление новой статьи')}
         else:
-            return {'title': 'Добавить новость', 'content': 'Добавление новости'}
+            return {'title': _('Добавить новость'), 'content': _('Добавление новости')}
 
 
 class PostUpdateView(PermissionRequiredMixin, UpdateView):
@@ -108,9 +121,9 @@ class PostUpdateView(PermissionRequiredMixin, UpdateView):
 
     def get_type(self):
         if 'article' in self.request.path:
-            return {'title': 'Изменить статью', 'content': 'Редактировать статью'}
+            return {'title': _('Изменить статью'), 'content': _('Редактировать статью')}
         else:
-            return {'title': 'Изменить новость', 'content': 'Редактировать новость'}
+            return {'title': _('Изменить новость'), 'content': _('Редактировать новость')}
 
 
 class PostDeleteView(PermissionRequiredMixin, DeleteView):
@@ -163,7 +176,7 @@ def subscribe(request, pk):
     category = Category.objects.get(id=pk)
     category.subscribers.add(user)
 
-    message = 'Вы успешно подписались на рассылку новых публикаций в категории: '
+    message = _('Вы успешно подписались на рассылку новых публикаций в категории: ')
     return render(request, 'account/subscribe.html', {'category': category, 'message': message})
 
 
@@ -173,5 +186,5 @@ def unsubscribe(request, pk):
     category = Category.objects.get(id=pk)
     category.subscribers.remove(user)
 
-    message = 'Вы успешно отписаны от рассылки по категории: '
+    message = _('Вы успешно отписаны от рассылки по категории: ')
     return render(request, 'account/unsubscribe.html', {'category': category, 'message': message})

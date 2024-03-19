@@ -2,6 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import Group
 from allauth.account.forms import SignupForm
+from django.utils.translation import gettext as _
 from .models import Post
 
 
@@ -10,10 +11,10 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = ['title', 'text', 'category', 'author']
         labels = {
-            'title': 'Заголовок',
-            'text': 'Текст',
-            'category': 'Категория',
-            'author': 'Автор'
+            'title': _('Заголовок'),
+            'text': _('Текст'),
+            'category': _('Категория'),
+            'author': _('Автор')
         }
 
     def clean(self):
@@ -22,7 +23,7 @@ class PostForm(forms.ModelForm):
         content = cleaned_data.get('text')
         if content == title:
             raise ValidationError(
-                'Текст не должен совпадать с заголовком.'
+                _('Текст не должен совпадать с заголовком.')
             )
         return cleaned_data
 

@@ -1,6 +1,8 @@
 from django.contrib import admin
 from .models import Author, Category, Post, PostCategory, Comment
 
+from modeltranslation.admin import TranslationAdmin
+
 
 def nullfy_post_rating(modeladmin, request, queryset):
     queryset.update(rating=0)
@@ -19,6 +21,7 @@ class AuthorAdmin(admin.ModelAdmin):
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
+    model = Post
     list_display = ('title', 'post_type', 'author')
     list_filter = ('post_type', 'author')
     search_fields = ('title', 'category__name')
@@ -29,6 +32,14 @@ class PostAdmin(admin.ModelAdmin):
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('post_preview', 'text_preview', 'rating')
     actions = [nullfy_comment_rating]
+
+
+class CategoryAdmin(TranslationAdmin):
+    model = Category
+
+
+class PostsAdmin(TranslationAdmin):
+    model = Post
 
 
 # Register your models here.

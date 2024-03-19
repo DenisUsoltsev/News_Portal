@@ -1,9 +1,10 @@
 {% extends 'flatpages/default.html' %}
+{% load i18n %}
 
 {% load custom_filters %}
 
 {% block title %}
-    Новость/Статья
+    {% trans 'Новость/Статья' %}
 {% endblock title %}
 
 {% block content %}
@@ -17,17 +18,17 @@
     <div class="text-center" >
         {% if news.post_type == "NE" %}
             <a style="text-decoration: none" href="/news/{{ news.pk }}/edit">
-                <input class="btn btn-lg btn-dark" type="button" value="Редактировать" />
+                <input class="btn btn-lg btn-dark" type="button" value="{% trans 'Редактировать' %}" />
             </a>
             <a style="text-decoration: none" href="/news/{{ news.pk }}/delete">
-                <input id="deleteButton" class="btn btn-lg btn-dark" type="button" value="Удалить" />
+                <input id="deleteButton" class="btn btn-lg btn-dark" type="button" value="{% trans 'Удалить' %}" />
             </a>
         {% else %}
             <a style="text-decoration: none" href="/article/{{ news.pk }}/edit">
-                <input class="btn btn-lg btn-dark" type="button" value="Редактировать" />
+                <input class="btn btn-lg btn-dark" type="button" value="{% trans 'Редактировать' %}" />
             </a>
             <a style="text-decoration: none" href="/article/{{ news.pk }}/delete">
-                <input id="deleteButton" class="btn btn-lg btn-dark" type="button" value="Удалить" />
+                <input id="deleteButton" class="btn btn-lg btn-dark" type="button" value="{% trans 'Удалить' %}" />
             </a>
         {% endif %}
     </div>

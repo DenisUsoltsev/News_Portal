@@ -6,6 +6,7 @@ register = template.Library()
 censor_list = [
     'редиска',
     'заголовок',
+    'radish',
 ]
 
 def clear_str(word: str) -> str:

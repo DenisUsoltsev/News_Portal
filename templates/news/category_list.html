@@ -1,4 +1,5 @@
 {% extends 'flatpages/default.html' %}
+{% load i18n %}
 
 {% load custom_filters %}
 
@@ -9,22 +10,22 @@
 {% block content %}
     {% if is_not_subscriber %}
         <p class="text-center">
-            <a href="{% url 'subscribe' category.id %}" class="btn btn-primary btn-md">Подписаться</a>
+            <a href="{% url 'subscribe' category.id %}" class="btn btn-primary btn-md">{% trans 'Подписаться' %}</a>
         </p>
     {% else %}
         <p class="text-center">
-            <a href="{% url 'unsubscribe' category.id %}" class="btn btn-primary btn-md">Отписаться</a>
+            <a href="{% url 'unsubscribe' category.id %}" class="btn btn-primary btn-md">{% trans 'Отписаться' %}</a>
         </p>
     {% endif %}
-    <h1>Новостная лента</h1>
+    <h1>{% trans 'Новостная лента' %}</h1>
     {% if category_news_list %}
-    <p><i>Количество публикаций: <u>{{category_news_list|length}}</u></i></p>
+    <p><i>{% trans 'Количество публикаций:' %} <u>{{category_news_list|length}}</u></i></p>
     <table width="100%">
         <tr align="center">
-            <th>Заголовок</th>
-            <th>Краткое содержание</th>
-            <th>Дата публикации</th>
-            <th>Категория</th>
+            <th>{% trans 'Заголовок' %}</th>
+            <th>{% trans 'Краткое содержание' %}</th>
+            <th>{% trans 'Дата публикации' %}</th>
+            <th>{% trans 'Категория' %}</th>
         </tr>
 
         {% for post in category_news_list %}
@@ -47,7 +48,7 @@
         {% endfor %}
     </table>
     {% else %}
-        <h2>Публикаций нет!</h2>
+        <h2>{% trans 'Публикаций нет!' %}</h2>
     {% endif %}
 
 {% include "flatpages/paginate.html" %}
