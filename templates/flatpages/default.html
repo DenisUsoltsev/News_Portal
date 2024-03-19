@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+{% load i18n %}
+
+<html lang="ru">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -15,14 +17,14 @@
         <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %}" />
 
         <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+        {% block extra_head %}
+        {% endblock extra_head %}
     </head>
     <body>
         <!-- Responsive navbar-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
             <div class="container">
-                {% load cache %}
-                {% cache 600 menu %}
-                <a class="navbar-brand" href="{% url 'home' %}">Главная</a>
+                <a class="navbar-brand" href="{% url 'home' %}">{% trans 'Главная' %}</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -31,34 +33,33 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{% url 'post_list' %}">Новости</a>
+                            <a class="nav-link active" aria-current="page" href="{% url 'post_list' %}">{% trans 'Новости' %}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'post_search' %}">Поиск</a>
+                            <a class="nav-link" href="{% url 'post_search' %}">{% trans 'Поиск' %}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'post_create' %}">Добавить новость</a>
+                            <a class="nav-link" href="{% url 'post_create' %}">{% trans 'Добавить новость' %}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/article/create">Добавить статью</a>
+                            <a class="nav-link" href="/article/create">{% trans 'Добавить статью' %}</a>
                         </li>
                     </ul>
                 </div>
-                {% endcache %}
                 <div class="collapse navbar-collapse">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             {% if user.is_authenticated %}
-                                <a class="nav-link" href="{% url 'profile' %}">Профиль</a>
+                                <a class="nav-link" href="{% url 'profile' %}">{% trans 'Профиль' %}</a>
                             {% else %}
-                                <a class="nav-link" href="{% url 'account_signup' %}">Регистрация</a>
+                                <a class="nav-link" href="{% url 'account_signup' %}">{% trans 'Регистрация' %}</a>
                             {% endif %}
                         </li>
                         <li class="nav-item">
                             {% if user.is_authenticated %}
-                                <a class="nav-link" href="{% url 'account_logout' %}">Выйти</a>
+                                <a class="nav-link" href="{% url 'account_logout' %}">{% trans 'Выход' %}</a>
                             {% else %}
-                                <a class="nav-link" href="{% url 'account_login' %}">Войти</a>
+                                <a class="nav-link" href="{% url 'account_login' %}">{% trans 'Войти' %}</a>
                             {% endif %}
                         </li>
                         <li class="nav-item">
@@ -78,6 +79,26 @@
                             </ul>
                         </li>-->
                     </ul>
+                    <form action="{% url 'set_language' %}" method="POST">
+                        {% csrf_token %}
+                        <input name="next" type="hidden" value="{{ redirect_to }}">
+                        <input name="language" type="hidden" value="{{ language.code }}" />
+                        <select name="language" id="language">
+                            <option value="none" hidden="">{% trans 'Русский' %}</option>
+                            {% get_current_language as LANGUAGE_CODE %}
+                            {% get_available_languages as LANGUAGES %}
+                            {% get_language_info_list for LANGUAGES as languages %}
+                            {% for language in languages %}
+                                <option value="{{ language.code }}"
+                                        {% if language.code == LANGUAGE_CODE %}
+                                        selected
+                                        {% endif %}>
+                                    {{ language.name_local }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                        <input type="submit" value="ok">
+                    </form>
                 </div>
             </div>
         </nav>
