@@ -2,7 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import Group
 from allauth.account.forms import SignupForm
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 from .models import Post
 
 
